@@ -1,0 +1,122 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Системный администратор</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <link href='{% static "css/style.css" %}' rel="stylesheet">
+</head>
+<body class="page">
+    <aside class="sidebar">
+        <nav class="sidebar__nav">
+            <ul class="sidebar__nav-list">
+                <li class="sidebar__list-item">
+                    <a href="index.html" class="sidebar__list-link">
+                        <img src='{% static "img/home.svg" %}'>
+                        <p class="sidebar__list-text">Главная</p>
+                    </a>
+                </li>
+                <li class="sidebar__list-item">
+                    <a href="#" class="sidebar__list-link">
+                        <img src='{% static "img/statisctics.svg" %}'>
+                        <p class="sidebar__list-text">Общая статистика</p>
+                    </a>
+                </li>
+                <li class="sidebar__list-item">
+                    <a href="#" class="sidebar__list-link">
+                        <img src='{% static "img/career.svg" %}'>
+                        <p class="sidebar__list-text">Востребованность</p>
+                    </a>
+                </li>
+                <li class="sidebar__list-item">
+                    <a href="#" class="sidebar__list-link">
+                        <img src='{% static "img/geography.svg" %}'>
+                        <p class="sidebar__list-text">География</p>
+                    </a>
+                </li>
+                <li class="sidebar__list-item">
+                    <a href="#" class="sidebar__list-link">
+                        <img src='{% static "img/skills.svg" %}'>
+                        <p class="sidebar__list-text">Навыки</p>
+                    </a>
+                </li>
+                <li class="sidebar__list-item">
+                    <a href="#" class="sidebar__list-link">
+                        <img src='{% static "img/last.svg" %}'>
+                        <p class="sidebar__list-text">Последние вакансии</p>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </aside>
+
+    <header class="header">
+        <a class="logo" href="#">
+            <img class="logo__image" src='{% static "img/logo.jpg" %}'>
+        </a>
+    </header>
+
+    <main class="content">
+        <section class="lead">
+            <h1 class="lead__title">Системный администратор</h1>
+        </section>
+        <section class="info">
+
+            <div class="who">
+                <img class="who__image" src='{% static "img/info-image.jpg" %}'>
+                <div class="who__text">
+                   <h2 class="info__title title">Кто это?</h2>
+                    <p class="lead__text info__text_border">
+                        Это специалист, который нужен в любой компании, где сотрудники работают на компьютерах. Он устанавливает, настраивает и поддерживает бесперебойную работу и безопасность ИТ-систем: приложений, сайтов, локальной сети и всего софта в компании. От сисадмина зависит, насколько комфортно будет работать команде, будет ли стабильной внутренняя технологическая инфраструктура, как быстро будут устранять неполадки и насколько оперативно восстанавливается инфраструктура после аварий.
+                    </p>
+                </div>
+            </div>
+
+            <div class="responsibilities">
+                <h2 class="info__title title">Чем занимается сисадмин?</h2>
+                <p class="info__text">
+                    Системный администратор занимается всем, что связано с настройкой и поддержанием работы внутренней инфраструктуры компании. Его задачи:
+                </p>
+                <ul class="info__list">
+                    <li class="info__list-item">Устанавливать, настраивать и обновлять все ПО, необходимое для работы компании, в том числе операционные системы Windows и Linux.</li>
+                    <li class="info__list-item">Отслеживать и устранять ошибки в работе инфраструктуры: ПО для работы сотрудников, сайта или приложения компании.</li>
+                    <li class="info__list-item">Поддерживать информационную безопасность, защищать локальные сети и инфраструктуру разработки от взломов.</li>
+                    <li class="info__list-item">Проводить профилактику перегрузок инфраструктуры: писать скрипты для автоматизации, которые помогут системе бесперебойно работать и не «падать». Также сисадмин должен регулярно сохранять резервные копии баз данных, чтобы система продолжала работать, если возникнут проблемы.</li>
+                    <li class="info__list-item">Поддерживать и настраивать системы мониторинга. Это помогает в будущем защитить инфраструктуру от таких же или схожих проблем.</li>
+                </ul>
+                <p class="info__text">
+                    С компьютерами сегодня работают везде: от очевидных финтеха и образования до ретейла и общепита. Соответственно, всем сферам понадобится системный администратор, который следит, чтобы все работало слаженно и без ошибок.
+                </p>
+            </div>
+        </section>
+
+        <section class="skills">
+            <div class="skills__content">
+                <h2 class="skills__title title">Навыки системного администратора</h2>
+                <p class="skills__text">
+                    Вопреки стереотипам, системный администратор не сидит без дела в ожидании, когда что-то сломается. Его работа — проактивная, он должен не только оперативно устранять неполадки, но и предупреждать их. Для этого нужно уметь работать с базами данных, программировать и разбираться в автоматизации, а также быть стрессоустойчивым и очень внимательным.
+                </p>
+            </div>
+            <img class="skills__image" src='{% static "img/skills.jpg" %}'>
+        </section>
+
+        <section class="career">
+            <h2 class="career__title title">Куда расти системному администратору?</h2>
+            <p class="career__text">
+                Помимо роста по грейдам очевидный карьерный трек для системного администратора — <b>DevOps-инженер</b>. Это специалист, который внедряет в компании DevOps-методологию. Концепция DevOps предполагает оптимизацию инфраструктуры и процессов разработки, чтобы они шли эффективно, новый функционал выкатывался быстро, работа над проектом была прозрачной для всех участников: от проектирования до тестирования и эксплуатации.
+            </p>
+            <p class="career__text">DevOps-инженер может работать только в компаниях, где есть команда разработки. Но зарплата его при этом выше, чем у системного администратора.</p>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p class="name">Сагитова Аделия Римовна</p>
+        <p class="group">АТ-04</p>
+    </footer>
+</body>
+</html>
