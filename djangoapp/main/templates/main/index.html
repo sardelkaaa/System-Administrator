@@ -1,67 +1,7 @@
+{% extends 'main/base.html' %}
+{% block title %} Главная {% endblock %}
 {% load static %}
-
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Системный администратор</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
-    <link href='{% static "css/style.css" %}' rel="stylesheet">
-</head>
-<body class="page">
-    <aside class="sidebar">
-        <nav class="sidebar__nav">
-            <ul class="sidebar__nav-list">
-                <li class="sidebar__list-item">
-                    <a href="index.html" class="sidebar__list-link">
-                        <img src='{% static "img/home.svg" %}'>
-                        <p class="sidebar__list-text">Главная</p>
-                    </a>
-                </li>
-                <li class="sidebar__list-item">
-                    <a href="#" class="sidebar__list-link">
-                        <img src='{% static "img/statisctics.svg" %}'>
-                        <p class="sidebar__list-text">Общая статистика</p>
-                    </a>
-                </li>
-                <li class="sidebar__list-item">
-                    <a href="#" class="sidebar__list-link">
-                        <img src='{% static "img/career.svg" %}'>
-                        <p class="sidebar__list-text">Востребованность</p>
-                    </a>
-                </li>
-                <li class="sidebar__list-item">
-                    <a href="#" class="sidebar__list-link">
-                        <img src='{% static "img/geography.svg" %}'>
-                        <p class="sidebar__list-text">География</p>
-                    </a>
-                </li>
-                <li class="sidebar__list-item">
-                    <a href="#" class="sidebar__list-link">
-                        <img src='{% static "img/skills.svg" %}'>
-                        <p class="sidebar__list-text">Навыки</p>
-                    </a>
-                </li>
-                <li class="sidebar__list-item">
-                    <a href="#" class="sidebar__list-link">
-                        <img src='{% static "img/last.svg" %}'>
-                        <p class="sidebar__list-text">Последние вакансии</p>
-                    </a>
-                </li>
-            </ul>
-        </nav>
-    </aside>
-
-    <header class="header">
-        <a class="logo" href="#">
-            <img class="logo__image" src='{% static "img/logo.jpg" %}'>
-        </a>
-    </header>
-
-    <main class="content">
+{% block content %}
         <section class="lead">
             <h1 class="lead__title">Системный администратор</h1>
         </section>
@@ -112,11 +52,4 @@
             </p>
             <p class="career__text">DevOps-инженер может работать только в компаниях, где есть команда разработки. Но зарплата его при этом выше, чем у системного администратора.</p>
         </section>
-    </main>
-
-    <footer class="footer">
-        <p class="name">Сагитова Аделия Римовна</p>
-        <p class="group">АТ-04</p>
-    </footer>
-</body>
-</html>
+{% endblock %}
