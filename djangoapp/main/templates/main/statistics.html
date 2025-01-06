@@ -2,4 +2,8 @@
 {% block title %} Общая статистика {% endblock %}
 {% load static %}
 {% block content %}
+<section class="flex-statistics">
+    <img class="graph-image" src="{% static 'graphics_and_tables/salary_by_years_graph.png' %}" alt="График динамики зарплат по годам">
+    <img class="table-image" src="{% static 'graphics_and_tables/salary_by_years_table.png' %}" alt="Таблица динамики зарплат по годам">
+</section>
 {% endblock %}
