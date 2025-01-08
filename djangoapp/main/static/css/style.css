@@ -7,6 +7,10 @@
     padding: 0;
     background-color: white;
     line-height: 1.5;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    border: solid 0.5px black;
 }
 
 .header {
@@ -228,6 +232,7 @@
     color: #e0e0e0;
     display: flex;
     justify-content: space-between;
+    margin-top: auto;
 }
 
 .flex-statistics {
