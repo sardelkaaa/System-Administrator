@@ -62,6 +62,17 @@ class Command(BaseCommand):
                     }
             return most_popular_skills
 
+        synonyms = [
+            'system admin', 'сисадмин',
+            'сис админ', 'системный админ',
+            'cистемный админ', 'администратор систем',
+            'системний адміністратор'
+        ]
+
+        def find_vacancies_by_synonyms(vacancies, tags):
+            mask = vacancies['name']
+
+
         def get_vacancies(param=None):
             vacancies = pd.DataFrame.from_records(Vacancy.objects.values().all())
             vacancies['salary'] = vacancies['salary'].fillna(0)
@@ -101,7 +112,7 @@ class Command(BaseCommand):
             plt.close(fig)
             plt.close()
 
-        def get_barh_and_table(x, y, title, histogram_color, table_color, histogram_name, table_name, x_name,
+        def get_barh_and_table(x, y, y_table, title, histogram_color, table_color, histogram_name, table_name, x_name,
                                     y_name):
             plt.figure(figsize=(10, 8))
             plt.barh(y, x, color=histogram_color)
@@ -112,7 +123,7 @@ class Command(BaseCommand):
             plt.savefig(f'main/static/graphics_and_tables/{histogram_name}')
 
             fig, ax = plt.subplots(figsize=(6, 8))
-            table_data = pd.DataFrame({x_name: y, y_name: x})
+            table_data = pd.DataFrame({x_name: y_table, y_name: x})
             table = ax.table(cellText=table_data.values,
                              colLabels=table_data.columns,
                              loc='center',
@@ -156,6 +167,7 @@ class Command(BaseCommand):
             plt.close(fig)
             plt.close()
 
+        ### Общая статистика ###
 
         # Первый график
         salary_by_years = get_statistics_by_years(salary_vacancies, 'salary')
@@ -187,10 +199,11 @@ class Command(BaseCommand):
 
         # Третий график
         salary_by_cities = get_statistics_by_cities(salary_vacancies, 'salary')
-        salary_cities = list(salary_by_cities.keys())
+        salary_cities_table = list(salary_by_cities.keys())
+        salary_cities = [city.replace('-', '-\n') if '-' in city else city.replace(' ', '\n') for city in salary_by_cities.keys()]
         salaries_by_cities = list(salary_by_cities.values())
         get_barh_and_table(
-            salaries_by_cities, salary_cities,
+            salaries_by_cities, salary_cities, salary_cities_table,
             'Уровень зарплат по городам',
             'darkred', '#5E2129',
             'salary_by_cities_graph.png',
@@ -220,8 +233,6 @@ class Command(BaseCommand):
             counts.append(sum(skills_by_years[year]['count']))
             skills.append(skills_by_years[year]['skill'])
 
-        print(years, counts, skills)
-
         get_pie_and_table(
             years, counts, skills,
             'ТОП-20 навыков по годам', 'purple',
@@ -229,5 +240,11 @@ class Command(BaseCommand):
             'top_skills_table.png',
             'Год', 'Навыки'
         )
+
+        ### Востребованность ###
+
+        ### География ###
+
+        ### Навыки ###
 
         self.stdout.write(self.style.SUCCESS('Графики созданы успешно!'))

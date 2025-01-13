@@ -28,15 +28,14 @@ def get_statistics_by_cities(vacancies, param):
     stats_count_by_cities = get_dynamic_by_cities(vacancies, 'name')
     stats_count_by_cities = stats_count_by_cities[stats_count_by_cities > 1]
 
-    stats_salary_by_cities = get_dynamic_by_cities(vacancies, 'salary')
-    stats_salary_by_cities = stats_salary_by_cities[stats_salary_by_cities.index.isin(stats_count_by_cities.index)].head(10).to_dict()
-
-    stats_count_by_cities = stats_count_by_cities.to_dict()
     if param == 'salary':
+        stats_salary_by_cities = get_dynamic_by_cities(vacancies, 'salary')
+        stats_salary_by_cities = stats_salary_by_cities[
+        stats_salary_by_cities.index.isin(stats_count_by_cities.index)].head(20).to_dict()
         return stats_salary_by_cities
-    return stats_count_by_cities
+    return stats_count_by_cities.to_dict()
 
-def get_vacancies():
+def get_vacancies(param=None):
     dtype = {
         'name': 'str',
         'salary': 'float64',
@@ -47,8 +46,9 @@ def get_vacancies():
 
     vacancies = pd.read_csv('filtered_vacancies', dtype=dtype)
     vacancies['salary'] = vacancies['salary'].fillna(0)
-    vacancies = vacancies[vacancies['salary'] <= 10 ** 7]
+    vacancies = vacancies[vacancies['salary'] <= 10 ** 7] if param else vacancies
     vacancies.loc[:, 'published_at'] = pd.to_datetime(vacancies['published_at'], utc=True).dt.year
     return vacancies
 
-filtered_vacancies = get_vacancies()
+salary_vacancies = get_vacancies('salary')
+all_vacancies = get_vacancies()
