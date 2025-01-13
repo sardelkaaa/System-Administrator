@@ -1,12 +1,10 @@
-from locale import currency
-
 import pandas as pd
 from django.core.management.base import BaseCommand
 from main.models import Currency, Vacancy
 
 
 class Command(BaseCommand):
-    help = 'Import vacancies from a CSV file'
+    help = 'Загрузка отфильтрованных вакансий в базу данных'
 
     def handle(self, *args, **kwargs):
         def format_salary(row, df_currency):
@@ -56,4 +54,4 @@ class Command(BaseCommand):
         ]
 
         Vacancy.objects.bulk_create(filtered_vacancies, batch_size=1000)
-        self.stdout.write(self.style.SUCCESS('Successfully imported vacancies'))
+        self.stdout.write(self.style.SUCCESS('Вакансии успешно отфильтрованы!'))
