@@ -1,9 +1,9 @@
-import numpy as np
-from django.core.management.base import BaseCommand
-import pandas as pd
-from main.models import Vacancy
-from matplotlib import pyplot as plt
 from collections import Counter
+import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
+from django.core.management.base import BaseCommand
+from main.models import Vacancy
 
 
 class Command(BaseCommand):
@@ -55,23 +55,17 @@ class Command(BaseCommand):
                 all_skills = [skill for skills in skills_lists for skill in skills]
                 if all_skills:
                     skills_count = Counter(all_skills)
-                    most_common_skill = skills_count.most_common(2)
+                    most_common_skills = skills_count.most_common(2)
+                    skills_text = '\n'.join([skill[0] for skill in most_common_skills])
+                    skills_count_text = [skill[1] for skill in most_common_skills]
                     most_popular_skills[year] = {
-                        'skill': [most_common_skill[i][0] for i in range(2)],
-                        'count': [most_common_skill[i][1] for i in range(2)]
+                        'skill': skills_text,
+                        'count': skills_count_text
                     }
             return most_popular_skills
 
-        synonyms = [
-            'system admin', 'сисадмин',
-            'сис админ', 'системный админ',
-            'cистемный админ', 'администратор систем',
-            'системний адміністратор'
-        ]
-
-        def find_vacancies_by_synonyms(vacancies, tags):
-            mask = vacancies['name']
-
+        def find_vacancies_by_synonyms(vacancies, synonyms):
+            return vacancies[vacancies['name'].str.lower().str.contains('|'.join(synonyms), na=False)]
 
         def get_vacancies(param=None):
             vacancies = pd.DataFrame.from_records(Vacancy.objects.values().all())
@@ -115,6 +109,7 @@ class Command(BaseCommand):
         def get_barh_and_table(x, y, y_table, title, histogram_color, table_color, histogram_name, table_name, x_name,
                                     y_name):
             plt.figure(figsize=(10, 8))
+            plt.gca().invert_yaxis()
             plt.barh(y, x, color=histogram_color)
             plt.xticks(np.arange(0.0, max(x) + 1, 5000.0))
             plt.tick_params(axis='x', rotation=90)
@@ -155,7 +150,7 @@ class Command(BaseCommand):
                              loc='center',
                              cellLoc='center')
             table.auto_set_font_size(False)
-            table.set_fontsize(8)
+            table.set_fontsize(6)
 
             for k, cell in table.get_celld().items():
                 if k[0] == 0:
@@ -224,7 +219,6 @@ class Command(BaseCommand):
         )
 
         # Пятый график
-
         skills_by_years = get_top_skills(all_vacancies)
         years = list(skills_by_years.keys())
         counts = []
@@ -241,10 +235,94 @@ class Command(BaseCommand):
             'Год', 'Навыки'
         )
 
+
+        synonyms = [
+            'system admin', 'сисадмин',
+            'сис админ', 'системный админ',
+            'cистемный админ', 'администратор систем',
+            'системний адміністратор'
+        ]
+
+        vacancies = find_vacancies_by_synonyms(all_vacancies, synonyms)
+        vacancies_for_salary = find_vacancies_by_synonyms(salary_vacancies, synonyms)
+
         ### Востребованность ###
+
+        # Первый график
+        salary_by_years_prof = get_statistics_by_years(vacancies_for_salary, 'salary')
+        salary_years_prof = list(salary_by_years_prof.keys())
+        salaries_by_year_prof = list(salary_by_years_prof.values())
+        get_graph_and_table(
+            salary_years_prof, salaries_by_year_prof,
+            'Динамика уровня зарплат по годам для профессии "Системный аналитик"',
+            'gold', '#FFCF48',
+            'salary_by_years_graph_prof.png',
+            'salary_by_years_table_prof.png',
+            'Год', 'Средняя з/п',
+            5000.0
+        )
+
+        # Второй график
+        count_by_years_prof = get_statistics_by_years(vacancies, 'count')
+        count_years_prof = list(count_by_years_prof.keys())
+        counts_by_years_prof = list(count_by_years_prof.values())
+        get_graph_and_table(
+            count_years_prof, counts_by_years_prof,
+            'Динамика количества вакансий по годам для профессии "Системный аналитик"',
+            'blue', '#1240AB',
+            'count_by_years_graph_prof.png',
+            'count_by_years_table_prof.png',
+            'Год', 'Количество вакансий',
+            50000.0
+        )
 
         ### География ###
 
+        # Первый график
+        salary_by_cities_prof = get_statistics_by_cities(vacancies_for_salary, 'salary')
+        salary_cities_table_prof = list(salary_by_cities_prof.keys())
+        salary_cities_prof = [city.replace('-', '-\n') if '-' in city else city.replace(' ', '\n') for city in
+                         salary_by_cities_prof.keys()]
+        salaries_by_cities_prof = list(salary_by_cities_prof.values())
+        get_barh_and_table(
+            salaries_by_cities_prof, salary_cities_prof, salary_cities_table_prof,
+            'Уровень зарплат по городам для профессии "Системный аналитик"',
+            'darkred', '#5E2129',
+            'salary_by_cities_graph_prof.png',
+            'salary_by_cities_table_prof.png',
+            'Город', 'Средняя з/п'
+        )
+
+        # Второй график
+        share_by_cities_prof = get_statistics_by_cities(vacancies, 'count')
+        share_cities_prof = list(share_by_cities_prof.keys())
+        shares_by_cities_prof = list(share_by_cities_prof.values())
+        get_pie_and_table(
+            share_cities_prof, shares_by_cities_prof, shares_by_cities_prof,
+            'Доля вакансий по городам для профессии "Системный аналитик"', 'green',
+            'share_by_cities_graph_prof.png',
+            'share_by_cities_table_prof.png',
+            'Город', 'Доля вакансий'
+        )
+
         ### Навыки ###
+
+        # Первый график
+        skills_by_years_prof = get_top_skills(vacancies)
+        years_prof = list(skills_by_years.keys())
+        counts_prof = []
+        skills_prof = []
+        for year in years_prof:
+            counts_prof.append(sum(skills_by_years_prof[year]['count']))
+            skills_prof.append(skills_by_years_prof[year]['skill'])
+
+        get_pie_and_table(
+            years_prof, counts_prof, skills_prof,
+            'ТОП-20 навыков по годам для профессии "Системный аналитик"', 'purple',
+            'top_skills_graph_prof.png',
+            'top_skills_table_prof.png',
+            'Год', 'Навыки'
+        )
+
 
         self.stdout.write(self.style.SUCCESS('Графики созданы успешно!'))

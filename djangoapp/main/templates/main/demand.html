@@ -2,4 +2,13 @@
 {% block title %} Востребованность {% endblock %}
 {% load static %}
 {% block content %}
+<section class="flex-statistics">
+    <img class="graph-image" src="{% static 'graphics_and_tables/salary_by_years_graph_prof.png' %}" alt="График динамики уровня зарплат по годам для выбранной профессии">
+    <img class="table-image" src="{% static 'graphics_and_tables/salary_by_years_table_prof.png' %}" alt="Таблица динамики уровня зарплат по годам для выбранной профессии">
+</section>
+
+<section class="flex-statistics">
+    <img class="graph-image" src="{% static 'graphics_and_tables/count_by_years_graph_prof.png' %}" alt="График динамики количества вакансий по годам для выбранной профессии">
+    <img class="table-image" src="{% static 'graphics_and_tables/count_by_years_table_prof.png' %}" alt="Таблица динамики количества вакансий по годам для выбранной профессии">
+</section>
 {% endblock %}

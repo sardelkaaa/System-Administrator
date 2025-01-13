@@ -2,4 +2,13 @@
 {% block title %} География {% endblock %}
 {% load static %}
 {% block content %}
+<section class="flex-statistics">
+    <img class="graph-image" src="{% static 'graphics_and_tables/salary_by_cities_graph_prof.png' %}" alt="График уровня зарплат по городам для выбранной профессии">
+    <img class="table-image" src="{% static 'graphics_and_tables/salary_by_cities_table_prof.png' %}" alt="Таблица уровня зарплат по городам для выбранной профессии">
+</section>
+
+<section class="flex-statistics">
+    <img class="graph-image" src="{% static 'graphics_and_tables/share_by_cities_graph_prof.png' %}" alt="График долей вакансий по городам для выбранной профессии">
+    <img class="table-image" src="{% static 'graphics_and_tables/share_by_cities_table_prof.png' %}" alt="Таблица долей вакансий по городам для выбранной профессии">
+</section>
 {% endblock %}

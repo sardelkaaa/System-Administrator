@@ -2,4 +2,8 @@
 {% block title %} Навыки {% endblock %}
 {% load static %}
 {% block content %}
+<section class="flex-statistics">
+    <img class="graph-image" src="{% static 'graphics_and_tables/top_skills_graph_prof.png' %}" alt="График ТОП-20 навыков по годам для выбранной профессии">
+    <img class="table-image" src="{% static 'graphics_and_tables/top_skills_table_prof.png' %}" alt="Таблица ТОП-20 навыков по годам для выбранной профессии">
+</section>
 {% endblock %}
