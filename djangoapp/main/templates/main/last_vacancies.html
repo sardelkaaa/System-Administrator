@@ -2,4 +2,18 @@
 {% block title %} Последние вакансии {% endblock %}
 {% load static %}
 {% block content %}
+<h1>Последние вакансии</h1>
+    <ul class="last-vacancies">
+    {% for vacancy in vacancies %}
+        <li class="last-vacancies__item">
+            <h2>{{ vacancy.name }}</h2>
+            <p><strong>Описание:</strong> {{ vacancy.description |safe }}</p>
+            <p><strong>Навыки:</strong> {{ vacancy.key_skills }}</p>
+            <p><strong>Компания:</strong> {{ vacancy.employer.name }}</p>
+            <p><strong>Оклад:</strong> {{ vacancy.salary.from }} - {{ vacancy.salary.to }}</p>
+            <p><strong>Регион:</strong> {{ vacancy.area.name }}</p>
+            <p><strong>Дата публикации:</strong> {{ vacancy.published_at }}</p>
+        </li>
+    {% endfor %}
+    </ul>
 {% endblock %}
